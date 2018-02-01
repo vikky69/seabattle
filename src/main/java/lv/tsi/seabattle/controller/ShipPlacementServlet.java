@@ -1,6 +1,4 @@
-package lv.tsi.seabattle;
-
-import lv.tsi.seabattle.model.Player;
+package lv.tsi.seabattle.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RegisterServlet", urlPatterns = "/register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "ShipPlacementServlet", urlPatterns = "/shipPlacement")
+public class ShipPlacementServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("player-name");
-        System.out.println("Player:" + name);
-
-        Player player = new Player();
-        player.setName(name);
-
-        response.sendRedirect("waitEnemyRegister");
+String[] addresses = request.getParameterValues("addr");
+for (String a:addresses){
+    System.out.println(a);
+}
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-request.getRequestDispatcher("/WEB-INF/register.jsp").include(request, response);
-
+        request.getRequestDispatcher("/WEB-INF/shipPlacement.jsp")
+                .include(request, response);
     }
 }

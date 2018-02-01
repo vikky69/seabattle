@@ -4,6 +4,12 @@ public class Game {
     private Player player1;
     private Player player2;
 
+    public boolean isComplete(){
+        return player1 !=null && player2 !=null; // eto virazhenie - true.
+    }
+
+
+
     public Player getPlayer1() {
         return player1;
     }
