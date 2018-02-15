@@ -7,6 +7,15 @@ public class Field {
     private Map<String, CellContent> content = new HashMap<>();
     private boolean invalid;
 
+    /**
+     * This method
+     * @return True, if we have ships left
+     */
+
+    public boolean hasMoreShips() {
+        return  content.containsValue(CellContent.SHIP);
+    }
+
     public void setShip (String addr){
         content.put(addr, CellContent.SHIP);
     }

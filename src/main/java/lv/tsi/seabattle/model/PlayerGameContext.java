@@ -1,6 +1,8 @@
 package lv.tsi.seabattle.model;
 
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -10,6 +12,20 @@ import java.io.Serializable;
 public class PlayerGameContext implements Serializable{
     private Player player;
     private Game game;
+
+
+
+
+    //kogda otrabotal pervij Inject. on zapisivaet, kogda on otrabotal
+    @PostConstruct
+    private void created(){
+
+    }
+
+    @PreDestroy
+    private void destroyed(){
+        game.setCancelled(true);
+    }
 
     public Player getPlayer() {
         return player;

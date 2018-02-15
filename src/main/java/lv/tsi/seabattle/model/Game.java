@@ -4,6 +4,16 @@ public class Game {
     private Player player1;
     private Player player2;
     private boolean player1Move = true;
+    private boolean finished;
+    private boolean cancelled;
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
 
     public Player getCurrentPlayer(){
         if (player1Move==true) {
@@ -50,19 +60,28 @@ public class Game {
     }
 
     public void fire(String addr) {
-        CellContent c= getOppositePlayer().getMyField().getCell(addr);
+        final Field oppositeMyField = getOppositePlayer().getMyField();
+        CellContent c= oppositeMyField.getCell(addr);
         if (c == CellContent.SHIP){
-            getOppositePlayer().getMyField().setCell (addr, CellContent.HIT); //esli drugoj igrok popal v moj korablj
+            oppositeMyField.setCell (addr, CellContent.HIT); //esli drugoj igrok popal v moj korablj
             getCurrentPlayer().getEnemyField().setCell(addr, CellContent.HIT); //esli ti popal v ego korablj
+            if (!oppositeMyField.hasMoreShips()){
+                finished = true;
+                getCurrentPlayer().setWinner(true);
+            }
             return;
         }
 
         if (c == CellContent.EMPTY){
-            getOppositePlayer().getMyField().setCell (addr, CellContent.MISS); //esli drugoj igrok popal v moj korablj
+            oppositeMyField.setCell (addr, CellContent.MISS); //esli drugoj igrok popal v moj korablj
             getCurrentPlayer().getEnemyField().setCell(addr, CellContent.MISS); //esli ti popal v ego korablj
 
         }
 
         player1Move = !player1Move; //xod perexodit k drugomu igroku
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 }
